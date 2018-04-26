@@ -43,8 +43,6 @@ public class ProceduralTerrain : MonoBehaviour
                 float u = (float)i / width;
                 float v = (float)j / depth;
 
-                Debug.Log(u + ", " + v);
-
                 // add the vertex
                 Color color = Random.value < 0.5 ? Color.blue : Color.green;
                 mc.AddVertex(new Vector3(x, y, z), Vector3.up, new Vector2(u, v), color);
