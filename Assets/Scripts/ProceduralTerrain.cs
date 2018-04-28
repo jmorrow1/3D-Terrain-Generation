@@ -26,6 +26,7 @@ public class ProceduralTerrain : MonoBehaviour
         mc.Clear();
 
         // add vertices
+        Vector3[,] vertices = new Vector3[width+1, depth+1];
         for (int i=0; i<=width; i++)
         {
             float x = i * squareSize;
@@ -45,18 +46,23 @@ public class ProceduralTerrain : MonoBehaviour
 
                 // add the vertex
                 Color color = Random.value < 0.5 ? Color.blue : Color.green;
-                mc.AddVertex(new Vector3(x, y, z), Vector3.up, new Vector2(u, v), color);
+
+                vertices[i,j] = new Vector3(x, y, z);
             }
         }
 
         // build triangles out of those vertices
+        for (int i=0; i<width; i++)
         {
-            int i = 0;
-            while (i + depth + 1 < mc.vertexCount)
+            for (int j=0; j<width; j++)
             {
-                mc.BuildTriangle(i, i + depth, i + depth + 1);
-                mc.BuildTriangle(i, i + depth + 1, i + 1);
-                i++;
+                Vector3 a = vertices[i, j];
+                Vector3 b = vertices[i + 1, j];
+                Vector3 c = vertices[i, j + 1];
+                Vector3 d = vertices[i + 1, j + 1];
+
+                mc.BuildTriangle(d, b, a);
+                mc.BuildTriangle(c, d, a);
             }
         }
 

@@ -7,10 +7,14 @@ class MeshCreator
     private List<Vector3> verts = new List<Vector3>();
     private List<Vector3> normals = new List<Vector3>();
     private List<Vector2> uvs = new List<Vector2>();
-    private List<Color> colors = new List<Color>();
     private List<int> triangleIndices = new List<int>();
+    private List<Color> colors = new List<Color>();
     private Mesh mesh;
-    public int vertexCount { get { return verts.Count; } }
+
+    public MeshCreator()
+    {
+
+    }
 
     public Mesh CreateMesh()
     {
@@ -23,19 +27,45 @@ class MeshCreator
         return mesh;
     }
 
-    public void BuildTriangle(int i0, int i1, int i2)
+    public void BuildTriangle(Vector3 v0, Vector3 v1, Vector3 v2)
     {
-        triangleIndices.Add(i0);
-        triangleIndices.Add(i1);
-        triangleIndices.Add(i2);
+        Vector3 normal = Vector3.Cross(v1 - v0, v2 - v0).normalized;
+        BuildTriangle(v0, v1, v2, normal);
     }
 
-    public void AddVertex(Vector3 v, Vector3 normal, Vector2 uv, Color color)
+    public void BuildTriangle(Vector3 v0, Vector3 v1, Vector3 v2, Vector3 normal)
     {
-        verts.Add(v);
+        int v0Index = verts.Count;
+        int v1Index = verts.Count + 1;
+        int v2Index = verts.Count + 2;
+
+        // add vertices
+        verts.Add(v0);
+        verts.Add(v1);
+        verts.Add(v2);
+
+        // add a surface normal for each vertex
         normals.Add(normal);
-        uvs.Add(uv);
-        colors.Add(color);
+        normals.Add(normal);
+        normals.Add(normal);
+
+        // add uvs
+        uvs.Add(new Vector2(0, 0));
+        uvs.Add(new Vector2(0, 1));
+        uvs.Add(new Vector2(1, 1));
+
+        // add colors
+        Color colorA = new Color(Random.value, Random.value, Random.value);
+        Color colorB = new Color(Random.value, Random.value, Random.value);
+        Color colorC = new Color(Random.value, Random.value, Random.value);
+        colors.Add(colorA);
+        colors.Add(colorB);
+        colors.Add(colorC);
+
+        // add indices that point to vertices
+        triangleIndices.Add(v0Index);
+        triangleIndices.Add(v1Index);
+        triangleIndices.Add(v2Index);
     }
 
     public void Clear()
@@ -44,6 +74,7 @@ class MeshCreator
         {
             mesh.Clear();
         }
+
         verts.Clear();
         normals.Clear();
         uvs.Clear();
