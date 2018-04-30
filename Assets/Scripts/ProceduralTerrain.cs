@@ -7,26 +7,32 @@ using UnityEngine;
 
 public class ProceduralTerrain : MonoBehaviour 
 {
+    public Color maxColor = Color.blue;
+    public Color minColor = Color.green;
+
+    public const int MAX_WIDTH = 100;
+    public const int MAX_HEIGHT = 100;
     public Vector3 noiseScale; 
-    [Range(0, 255)] public int width;
-    [Range(0, 255)] public int depth;
+    [Range(0, MAX_WIDTH)] public int width;
+    [Range(0, MAX_HEIGHT)] public int depth;
     public float maxHeight;
     public float squareSize;
     private MeshCreator mc;
     private MeshFilter meshFilter;
+    private ColoredPoint[,] vertices;
 
 	void Start () 
 	{
         mc = new MeshCreator();
         meshFilter = GetComponent<MeshFilter>();
-	}
+        vertices = new ColoredPoint[MAX_WIDTH+1, MAX_HEIGHT+1];
+    }
 	
 	void Update () 
 	{
         mc.Clear();
 
         // add vertices
-        Vector3[,] vertices = new Vector3[width+1, depth+1];
         for (int i=0; i<=width; i++)
         {
             float x = i * squareSize;
@@ -34,32 +40,38 @@ public class ProceduralTerrain : MonoBehaviour
             {
                 float z = j * squareSize;
 
-                // compute y-value using noise
+                // compute noise at given space time point
                 float noiseOut = Perlin.Noise(noiseScale.x * i, noiseScale.y * Time.time, noiseScale.z * j);
+
+                // normalize noise
                 noiseOut += 1;
                 noiseOut /= 2;
+
+                // compute y-value from noise
                 float y = noiseOut * maxHeight;
 
                 // compute uv
                 float u = (float)i / width;
                 float v = (float)j / depth;
 
-                // add the vertex
-                Color color = Random.value < 0.5 ? Color.blue : Color.green;
+                // compute color from noise
 
-                vertices[i,j] = new Vector3(x, y, z);
+                Color color = minColor + noiseOut * (maxColor - minColor);
+
+                // add the vertex
+                vertices[i,j] = new ColoredPoint(x, y, z, color.r, color.g, color.b);
             }
         }
 
         // build triangles out of those vertices
         for (int i=0; i<width; i++)
         {
-            for (int j=0; j<width; j++)
+            for (int j=0; j<depth; j++)
             {
-                Vector3 a = vertices[i, j];
-                Vector3 b = vertices[i + 1, j];
-                Vector3 c = vertices[i, j + 1];
-                Vector3 d = vertices[i + 1, j + 1];
+                ColoredPoint a = vertices[i, j];
+                ColoredPoint b = vertices[i + 1, j];
+                ColoredPoint c = vertices[i, j + 1];
+                ColoredPoint d = vertices[i + 1, j + 1];
 
                 mc.BuildTriangle(d, b, a);
                 mc.BuildTriangle(c, d, a);

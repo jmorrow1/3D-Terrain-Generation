@@ -27,22 +27,22 @@ class MeshCreator
         return mesh;
     }
 
-    public void BuildTriangle(Vector3 v0, Vector3 v1, Vector3 v2)
+    public void BuildTriangle(ColoredPoint v0, ColoredPoint v1, ColoredPoint v2)
     {
         Vector3 normal = Vector3.Cross(v1 - v0, v2 - v0).normalized;
         BuildTriangle(v0, v1, v2, normal);
     }
 
-    public void BuildTriangle(Vector3 v0, Vector3 v1, Vector3 v2, Vector3 normal)
+    public void BuildTriangle(ColoredPoint v0, ColoredPoint v1, ColoredPoint v2, Vector3 normal)
     {
         int v0Index = verts.Count;
         int v1Index = verts.Count + 1;
         int v2Index = verts.Count + 2;
 
         // add vertices
-        verts.Add(v0);
-        verts.Add(v1);
-        verts.Add(v2);
+        verts.Add(v0.pos);
+        verts.Add(v1.pos);
+        verts.Add(v2.pos);
 
         // add a surface normal for each vertex
         normals.Add(normal);
@@ -55,12 +55,9 @@ class MeshCreator
         uvs.Add(new Vector2(1, 1));
 
         // add colors
-        Color colorA = new Color(Random.value, Random.value, Random.value);
-        Color colorB = new Color(Random.value, Random.value, Random.value);
-        Color colorC = new Color(Random.value, Random.value, Random.value);
-        colors.Add(colorA);
-        colors.Add(colorB);
-        colors.Add(colorC);
+        colors.Add(v0.color);
+        colors.Add(v1.color);
+        colors.Add(v2.color);
 
         // add indices that point to vertices
         triangleIndices.Add(v0Index);

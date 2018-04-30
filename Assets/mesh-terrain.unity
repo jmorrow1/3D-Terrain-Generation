@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.43710396, g: 0.484819, b: 0.5650838, a: 1}
+  m_IndirectSpecularColor: {r: 0.45114845, g: 0.49976563, b: 0.56766564, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -188,7 +188,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 60008579}
   m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
-  m_LocalPosition: {x: 20, y: 20, z: -20}
+  m_LocalPosition: {x: 50, y: 38, z: -29.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -226,7 +226,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -277,6 +277,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3714aea324f1546439445e2384c9757f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxColor: {r: 0, g: 0, b: 1, a: 1}
+  minColor: {r: 0, g: 1, b: 0, a: 1}
   noiseScale: {x: 0.1, y: 0, z: 0.1}
   width: 92
   depth: 95
@@ -340,10 +342,10 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1420447291}
-  m_LocalRotation: {x: 0.5682794, y: -0.3835561, z: 0.3380907, w: 0.64469993}
+  m_LocalRotation: {x: 0.15699974, y: -0.6720379, z: 0.1489872, w: 0.7081801}
   m_LocalPosition: {x: 2, y: 12, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 82.79, y: -61.5, z: 0}
+  m_LocalEulerAnglesHint: {x: 25, y: -87, z: 0}
