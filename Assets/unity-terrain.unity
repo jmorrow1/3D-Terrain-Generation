@@ -197,7 +197,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   height: 20
-  xzScale: 0.1
+  xzScale: 0.5
   timeScale: 0
 --- !u!1 &1353898420
 GameObject:
